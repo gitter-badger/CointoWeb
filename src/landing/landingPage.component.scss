@@ -1,0 +1,26 @@
+.bodyFullWidth {
+    height: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.mainImage {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 350px;
+}
+
+.mainImageContainer {
+    overflow: hidden;
+}
+
+.mainHeading {
+    font-size: 3.5vmax;
+    font-weight: bold;
+    font-family: 'Exo', sans-serif;
+    font-variant: small-caps; // letter-spacing: -1px;
+    color: white;
+}

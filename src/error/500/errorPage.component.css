@@ -1,0 +1,9 @@
+.td-expansion-panel-no-shadow {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.stacktrace {
+  overflow: auto;
+}

@@ -1,0 +1,26 @@
+<td-layout-card-over>
+  <mat-card-header>
+    <mat-card-title i18n>Sorry da ist was schiefgelaufen, aber wir arbeiten dran...</mat-card-title>
+    <mat-card-subtitle i18n>Wenn du uns helfen möchtest, dann kannst du die Fehlerdetails an uns schicken.</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>{{this.message}}</p>
+    <mat-divider></mat-divider>
+    <td-expansion-panel class="td-expansion-panel-no-shadow" label="Stacktrace">
+      <div class="md-padding">
+        <pre class="stacktrace">{{this.stack}}</pre>
+      </div>
+    </td-expansion-panel>
+    <mat-divider></mat-divider>
+    <p>AppState</p>
+    <td-json-formatter [data]="this.state$ | async" key="appState" [levelsOpen]="1">
+    </td-json-formatter>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions>
+    <button mat-raised-button color="accent" class="text-upper" i18n>
+      Senden
+    </button>
+  </mat-card-actions>
+</td-layout-card-over>

@@ -1,0 +1,71 @@
+﻿<!-- <div class="layout-wrapper" [ngClass]="{'layout-compact':true}" (click)="onLayoutClick()">
+
+    <div #layoutContainer class="layout-container" [ngClass]="{'menu-layout-static': true,
+              'menu-layout-overlay': false,
+              'layout-menu-overlay-active': false,
+              'menu-layout-horizontal': false,
+              'menu-layout-slim': false,
+              'layout-menu-static-inactive': staticMenuDesktopInactive$ | async,
+              'layout-menu-static-active': staticMenuMobileActive$ | async }">
+
+        <app-topbar (toggleVisibleMainMenu)="this.onToggleMainMenu($event)" (toggleVisibleRightPanel)="onToggleRightPanel($event)"></app-topbar>
+
+        <div class="layout-menu" [ngClass]="{'layout-menu-dark':false}" (click)="onMenuClick($event)">
+            <div #layoutMenuScroller class="nano">
+                <div class="nano-content menu-scroll-content">
+                    <app-inline-profile #inlineProfile (toggleProfileMenu)="this.onToggleInlineProfileMenu()" [visible]="this.inlineProfileMenuIsVisible$ | async"
+                        (logout)="onLogout($event);" *ngIf="profileMode=='inline'"></app-inline-profile>
+                    <app-menu></app-menu>
+                </div>
+            </div>
+        </div>
+
+        <div class="layout-main">
+
+            <div class="layout-content">
+                <router-outlet></router-outlet>
+
+                <app-footer></app-footer>
+            </div>
+        </div>
+
+        <app-rightpanel #rightPanel [isVisible]="this.rightPanelIsVisible$ | async" (toggleVisible)="onToggleRightPanel($event)"></app-rightpanel>
+
+        <div class="layout-mask"></div>
+    </div>
+
+</div> -->
+<td-layout>
+    <!-- <td-navigation-drawer flex sidenavTitle="Covalent" logo="assets:teradata" name="Firstname Lastname" email="firstname.lastname@company.com">
+        <mat-nav-list>
+            <a mat-list-item>
+                <mat-icon>home</mat-icon>Home</a>
+        </mat-nav-list>
+        <div td-navigation-drawer-menu>
+            <mat-nav-list>
+                <a mat-list-item>
+                    <mat-icon>account_box</mat-icon>Profile</a>
+            </mat-nav-list>
+        </div>
+    </td-navigation-drawer> -->
+    <td-layout-nav-list navigationRoute="/" [opened]="this.isDesktop ? !(this.staticMenuDesktopInactive$ | async) : false" [mode]="this.isDesktop ? 'side' : 'over'">
+        <!-- <button mat-icon-button td-menu-button tdLayoutToggle>
+            <mat-icon>menu</mat-icon>
+        </button> -->
+        <div td-sidenav-content>
+            <app-inline-profile [visible]="this.inlineProfileMenuIsVisible$ | async"></app-inline-profile>
+            Sidenav content here
+        </div>
+        <div td-toolbar-content>
+            <button mat-button tdLayoutNavListToggle>
+                <mat-icon>view_list</mat-icon>
+            </button>
+        </div>
+        content
+        <router-outlet></router-outlet>
+        <td-layout-footer color="primary">
+            <app-footer></app-footer>
+        </td-layout-footer>
+    </td-layout-nav-list>
+
+</td-layout>

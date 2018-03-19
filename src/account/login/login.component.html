@@ -1,0 +1,23 @@
+﻿<td-layout-nav toolbarTitle="Covalent" navigationRoute="/">
+    <td-layout-card-over color="primary" cardWidth="50">
+        <mat-card-title>Login</mat-card-title>
+
+        <mat-divider></mat-divider>
+        <form #loginForm="ngForm">
+            <mat-card-content class="fieldContainer">
+                <mat-form-field>
+                    <input matInput placeholder="Benutzername" name="username" #username="ngModel" required i18n-placeholder [(ngModel)]="this.loginService.authenticateModel.userNameOrEmailAddress">
+                    <mat-error *ngIf="username.errors">aaaa</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input type="password" matInput placeholder="Passwort" #password="ngModel" name="password" [(ngModel)]="this.loginService.authenticateModel.password"
+                        required i18n-placeholder>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+                <button type="submit" mat-raised-button color="primary" class="text-upper" [disabled]="!loginForm.form.valid">Login</button>
+            </mat-card-actions>
+        </form>
+    </td-layout-card-over>
+</td-layout-nav>

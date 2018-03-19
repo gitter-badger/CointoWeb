@@ -1,0 +1,106 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "Cointo"
+  },
+  "apps": [{
+    "root": "src",
+    "outDir": "dist",
+    "assets": [
+      "assets",
+      "favicon.ico",
+      {
+        "glob": "abp.signalr.js",
+        "input": "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/",
+        "output": "./assets/abp/"
+      },
+      {
+        "glob": "abp.signalr-client.js",
+        "input": "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/",
+        "output": "./assets/abp/"
+      }
+    ],
+    "index": "index.html",
+    "main": "main.ts",
+    "polyfills": "polyfills.ts",
+    "test": "test.ts",
+    "tsconfig": "tsconfig.json",
+    "prefix": "app",
+    "styles": [
+      "../node_modules/simple-line-icons/css/simple-line-icons.css",
+      "../node_modules/famfamfam-flags/dist/sprite/famfamfam-flags.css",
+      "../src/shared/core.less",
+      "../src/theme.scss",
+      "../src/styles.scss",
+      "../node_modules/@covalent/core/common/platform.scss"
+    ],
+    "scripts": [
+      "../node_modules/jquery/dist/jquery.min.js",
+      "../node_modules/nanoscroller/bin/javascripts/jquery.nanoscroller.js",
+      "assets/layout/js/ripple.js",
+      "assets/layout/js/fontawesome-all.min.js",
+      "../node_modules/quill/dist/quill.js",
+      "../node_modules/jquery-migrate/dist/jquery-migrate.min.js",
+      "../node_modules/js-cookie/src/js.cookie.js",
+      "../node_modules/bootstrap/dist/js/bootstrap.js",
+      "../node_modules/lodash/lodash.min.js",
+      "../node_modules/moment/min/moment.min.js",
+      "../node_modules/signalr/jquery.signalR.js",
+      "../node_modules/@aspnet/signalr/dist/browser/signalr.min.js",
+      "../node_modules/toastr/toastr.js",
+      "../node_modules/sweetalert/dist/sweetalert.min.js",
+      "../node_modules/block-ui/jquery.blockUI.js",
+      "../node_modules/spin.js/spin.min.js",
+      "../node_modules/spin.js/jquery.spin.js",
+      "../node_modules/push.js/bin/push.min.js",
+      "../node_modules/jquery-slimscroll/jquery.slimscroll.min.js",
+      "../node_modules/node-waves/dist/waves.min.js",
+      "../node_modules/jquery-countto/jquery.countTo.js",
+      "../node_modules/raphael/raphael.min.js",
+      "../node_modules/morris.js/morris.min.js",
+      "../node_modules/chart.js/dist/Chart.bundle.min.js",
+      "../node_modules/flot/jquery.flot.js",
+      "../node_modules/flot/jquery.flot.resize.js",
+      "../node_modules/flot/jquery.flot.pie.js",
+      "../node_modules/flot/jquery.flot.categories.js",
+      "../node_modules/flot/jquery.flot.time.js",
+      "../node_modules/jquery-sparkline/jquery.sparkline.min.js",
+      "../node_modules/abp-web-resources/Abp/Framework/scripts/abp.js",
+      "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.jquery.js",
+      "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.toastr.js",
+      "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js",
+      "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js",
+      "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js",
+      "../node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js"
+    ],
+    "environmentSource": "environments/environment.ts",
+    "environments": {
+      "dev": "environments/environment.ts",
+      "prod": "environments/environment.prod.ts",
+      "hmr": "environments/environment.hmr.ts"
+    }
+  }],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [{
+      "files": "src/**/*.ts",
+      "project": "src/tsconfig.json"
+    },
+    {
+      "files": "e2e/**/*.ts",
+      "project": "e2e/tsconfig.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "css",
+    "component": {}
+  }
+}

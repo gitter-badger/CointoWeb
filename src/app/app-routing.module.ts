@@ -3,6 +3,7 @@
 import { AboutComponent } from './about/about.component';
 import { AppComponent } from './app.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
+import { DashboardContainerComponent } from './dashboard/dashboardContainer/dashboardContainer.component';
 import { NgModule } from '@angular/core';
 import { TenantsComponent } from './tenants/tenants.component';
 import { UsersComponent } from './users/users.component';
@@ -14,6 +15,7 @@ import { UsersComponent } from './users/users.component';
         path: '',
         component: AppComponent,
         children: [
+          { path: 'dashboard', component: DashboardContainerComponent }
           // { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard] },
           // { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
           // { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
@@ -24,4 +26,4 @@ import { UsersComponent } from './users/users.component';
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

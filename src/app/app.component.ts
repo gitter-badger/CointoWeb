@@ -10,6 +10,7 @@
   ViewChild
 } from '@angular/core';
 import { AppState, getUiMainMenuVisible, getUiRightPanelVisible } from 'store';
+import { TdLayoutNavListComponent, TdMediaService } from '@covalent/core';
 import {
   ToggleMainMenuAction,
   ToggleRightPanelAction
@@ -26,22 +27,15 @@ import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper
 import { SignalRHelper } from '@shared/helpers/SignalRHelper';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
-import { TdMediaService } from '@covalent/core';
 import { ToggleProfileMenuAction } from './actions/appUiState.actions';
 import { getMainMenuVisible } from '@app/reducer/appUiState.reducer';
 import { getUiProfileMenuVisible } from '../store/index';
 
-enum MenuOrientation {
-  STATIC,
-  OVERLAY,
-  SLIM,
-  HORIZONTAL
-}
-
 declare var jQuery: any;
 
 @Component({
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent extends AppComponentBase
   implements AfterViewInit, OnInit, AfterViewInit, OnDestroy {
@@ -57,7 +51,7 @@ export class AppComponent extends AppComponentBase
   rightPanelIsVisible$: Observable<boolean>;
   inlineProfileMenuIsVisible$: Observable<boolean>;
 
-  // @ViewChild('rightPanel') rightPanel: AppRightpanelComponent;
+  @ViewChild('layoutNav') layoutNav: TdLayoutNavListComponent;
   // @ViewChild('inlineProfile') inlineProfile: AppInlineProfileComponent;
   // @ViewChild('layoutContainer') layourContainerViewChild: ElementRef;
   // @ViewChild('layoutMenuScroller') layoutMenuScrollerViewChild: ElementRef;
@@ -94,14 +88,7 @@ export class AppComponent extends AppComponentBase
       getUiProfileMenuVisible
     );
     this.staticMenuDesktopInactive$ = this.store
-      .select(getUiMainMenuVisible)
-      .map(b => {
-        if (this.isDesktop) {
-          return !b;
-        } else {
-          return b;
-        }
-      });
+      .select(getUiMainMenuVisible);
 
     // abp.event.on('abp.notifications.received', userNotification => {
     //   abp.notifications.showUiNotifyForUserNotification(userNotification);
@@ -119,50 +106,28 @@ export class AppComponent extends AppComponentBase
     // });
   }
 
-  onLayoutClick() { }
-
-  onMenuClick($event) {
-    setTimeout(() => {
-      jQuery(this.layoutMenuScroller).nanoScroller();
-    }, 500);
-  }
-  onTopbarMenuButtonClick(event) {
-    event.preventDefault();
-  }
-  onTopbarItemClick(event, item) {
-    if (this.activeTopbarItem === item) {
-      this.activeTopbarItem = null;
-    } else {
-      this.activeTopbarItem = item;
-    }
-    event.preventDefault();
-  }
-
   onToggleRightPanel(event: any): void {
     // this.store.dispatch(
     //   new ToggleRightPanelAction({ isVisible: this.rightPanel.isVisible })
     // );
   }
 
-  onToggleInlineProfileMenu(event: any): void {
-    // this.store.dispatch(
-    //   new ToggleProfileMenuAction({ isVisible: this.inlineProfile.visible })
-    // );
+  onToggleInlineProfileMenu(visible: boolean): void {
+    this.store.dispatch(
+      new ToggleProfileMenuAction({ isVisible: !visible })
+    );
   }
 
   onLogout(event: any): void {
     this.store.dispatch(new Logout());
   }
 
-  onToggleMainMenu(evt: any) {
-    // this.store.dispatch(
-    //   new ToggleMainMenuAction({
-    //     isVisible:
-    //       this.layoutContainer.attributes
-    //         .getNamedItem('class')
-    //         .value.indexOf('layout-menu-static-inactive') < 0
-    //   })
-    // );
+  onToggleMainMenu() {
+    this.store.dispatch(
+      new ToggleMainMenuAction({
+        isVisible: this.layoutNav.opened
+      })
+    );
   }
 
   ngOnDestroy() {

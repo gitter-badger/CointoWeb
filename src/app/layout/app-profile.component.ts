@@ -18,6 +18,7 @@ import {
 import { AppComponent } from '../app.component';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { TdExpansionPanelComponent } from '@covalent/core';
 
 @Component({
   selector: 'app-inline-profile',
@@ -28,5 +29,6 @@ import { Router } from '@angular/router';
 export class AppInlineProfileComponent {
   @Input() visible: boolean;
   @Output() logout = new EventEmitter();
-  @Output() toggleProfileMenu = new EventEmitter();
+  @Output() toggleProfileMenu = new EventEmitter<boolean>();
+  @ViewChild('profilePanel') profilePanel: TdExpansionPanelComponent;
 }

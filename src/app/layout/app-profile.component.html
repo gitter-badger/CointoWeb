@@ -3,7 +3,8 @@
         <i class="far fa-user fa-2x profileImage"></i>
     </div>
 </div>
-<td-expansion-panel label="Another label goes here" [expand]="this.visible">
+<td-expansion-panel #profilePanel label="Another label goes here" [expand]="this.visible" (expanded)="this.toggleProfileMenu.emit(this.profilePanel.expand)"
+    (collapsed)="this.toggleProfileMenu.emit(this.profilePanel.expand)">
     <div class="md-padding">
         <h3 class="mat-subheading-2">md-padding class</h3>
         <div>Demo 5</div>

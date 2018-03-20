@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { CreateRoleComponent } from '@app/roles/create-role/create-role.component';
 import { CreateTenantComponent } from './tenants/create-tenant/create-tenant.component';
 import { CreateUserComponent } from '@app/users/create-user/create-user.component';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { EditRoleComponent } from './roles/edit-role/edit-role.component';
 import { EditTenantComponent } from './tenants/edit-tenant/edit-tenant.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
@@ -58,7 +59,8 @@ import { UsersComponent } from '@app/users/users.component';
     AppRoutingModule,
     ServiceProxyModule,
     SharedModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    DashboardModule
   ],
   providers: []
 })

@@ -5,10 +5,8 @@ import { AbpModule } from '@abp/abp.module';
 import { AccountComponent } from './account.component';
 import { AccountLanguagesComponent } from './layout/account-languages.component';
 import { AccountRoutingModule } from './account-routing.module';
-import { AuthEffects } from './effects/auth.effects';
 import { AuthGuard } from './services/auth-root.guard';
 import { CommonModule } from '@angular/common';
-import { EffectsModule } from '@ngrx/effects';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
@@ -18,10 +16,7 @@ import { RegisterComponent } from './register/register.component';
 import { RouterModule } from '@angular/router';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { SharedModule } from '@shared/shared.module';
-import { StoreModule } from '@ngrx/store';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { exhaustMap } from 'rxjs/operators';
-import { reducers } from './reducers';
 
 @NgModule({
   imports: [
@@ -55,9 +50,7 @@ export class AccountModule {
 
 @NgModule({
   imports: [
-    AccountModule,
-    StoreModule.forFeature('auth', reducers),
-    EffectsModule.forFeature([AuthEffects])
+    AccountModule
   ]
 })
 export class RootAuthModule { }

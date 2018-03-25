@@ -9,27 +9,22 @@
   Renderer,
   ViewChild
 } from '@angular/core';
-import { AppState, getUiMainMenuVisible, getUiRightPanelVisible } from 'store';
 import { TdLayoutNavListComponent, TdMediaService } from '@covalent/core';
-import {
-  ToggleMainMenuAction,
-  ToggleRightPanelAction
-} from '@app/actions/appUiState.actions';
 
 import { AppComponentBase } from '@shared/app-component-base';
 import { AppConsts } from '@shared/AppConsts';
 import { AppInlineProfileComponent } from './layout/app-profile.component';
 import { AppRightpanelComponent } from '@app/layout/app-rightpanel.component';
 import { AppTopbarComponent } from '@app/layout/app-topbar.component';
-import { Logout } from 'account/actions/auth.action';
+import { AppUiState } from '@app/store/appUi.state';
+import { LoadLanguages } from '@app/store/appMasterData.state';
 import { Observable } from 'rxjs/Observable';
+import { Select } from '@ngxs/store';
 import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
 import { SignalRHelper } from '@shared/helpers/SignalRHelper';
-import { Store } from '@ngrx/store';
+import { Store } from '@ngxs/store';
 import { Subscription } from 'rxjs/Subscription';
-import { ToggleProfileMenuAction } from './actions/appUiState.actions';
-import { getMainMenuVisible } from '@app/reducer/appUiState.reducer';
-import { getUiProfileMenuVisible } from '../store/index';
+import { ToggleMainMenu } from './store/appUi.state';
 
 declare var jQuery: any;
 
@@ -47,7 +42,8 @@ export class AppComponent extends AppComponentBase
   isDesktop: boolean;
   private _querySubscription: Subscription;
 
-  staticMenuDesktopInactive$: Observable<boolean>;
+  @Select(AppUiState.rightPanelVisible) staticMenuDesktopInactive$: Observable<boolean>;
+
   rightPanelIsVisible$: Observable<boolean>;
   inlineProfileMenuIsVisible$: Observable<boolean>;
 
@@ -62,7 +58,7 @@ export class AppComponent extends AppComponentBase
   constructor(
     injector: Injector,
     public renderer: Renderer,
-    private store: Store<AppState>,
+    private store: Store,
     private media: TdMediaService,
     private _ngZone: NgZone
   ) {
@@ -83,12 +79,14 @@ export class AppComponent extends AppComponentBase
       });
     });
 
-    this.rightPanelIsVisible$ = this.store.select(getUiRightPanelVisible);
-    this.inlineProfileMenuIsVisible$ = this.store.select(
-      getUiProfileMenuVisible
-    );
-    this.staticMenuDesktopInactive$ = this.store
-      .select(getUiMainMenuVisible);
+    this.store.dispatch(new LoadLanguages());
+
+    // this.rightPanelIsVisible$ = this.store.select(getUiRightPanelVisible);
+    // this.inlineProfileMenuIsVisible$ = this.store.select(
+    //   getUiProfileMenuVisible
+    // );
+    // this.staticMenuDesktopInactive$ = this.store
+    //   .select(getUiMainMenuVisible);
 
     // abp.event.on('abp.notifications.received', userNotification => {
     //   abp.notifications.showUiNotifyForUserNotification(userNotification);
@@ -113,20 +111,18 @@ export class AppComponent extends AppComponentBase
   }
 
   onToggleInlineProfileMenu(visible: boolean): void {
-    this.store.dispatch(
-      new ToggleProfileMenuAction({ isVisible: !visible })
-    );
+    // this.store.dispatch(
+    //   new ToggleProfileMenuAction({ isVisible: !visible })
+    // );
   }
 
   onLogout(event: any): void {
-    this.store.dispatch(new Logout());
+    // this.store.dispatch(new Logout());
   }
 
   onToggleMainMenu() {
     this.store.dispatch(
-      new ToggleMainMenuAction({
-        isVisible: this.layoutNav.opened
-      })
+      new ToggleMainMenu(this.layoutNav.opened)
     );
   }
 

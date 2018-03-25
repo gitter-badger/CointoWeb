@@ -9,23 +9,23 @@ import { AppMenuComponent } from './layout/app-menu.component';
 import { AppRightpanelComponent } from './layout/app-rightpanel.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppTopbarComponent } from './layout/app-topbar.component';
+import { AppUiState } from '@app/store/appUi.state';
 import { CommonModule } from '@angular/common';
 import { CreateRoleComponent } from '@app/roles/create-role/create-role.component';
-import { CreateTenantComponent } from './tenants/create-tenant/create-tenant.component';
 import { CreateUserComponent } from '@app/users/create-user/create-user.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { EditRoleComponent } from './roles/edit-role/edit-role.component';
-import { EditTenantComponent } from './tenants/edit-tenant/edit-tenant.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { FormsModule } from '@angular/forms';
+import { MasterDataState } from '@app/store/appMasterData.state';
 import { MaterialInput } from '@shared/directives/material-input.directive';
 import { ModalModule } from 'ngx-bootstrap';
 import { NgModule } from '@angular/core';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxsModule } from '@ngxs/store';
 import { RolesComponent } from '@app/roles/roles.component';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { SharedModule } from '@shared/shared.module';
-import { TenantsComponent } from '@app/tenants/tenants.component';
 import { TopBarLanguageSwitchComponent } from '@app/layout/topbar-languageswitch.component';
 import { UsersComponent } from '@app/users/users.component';
 
@@ -33,9 +33,6 @@ import { UsersComponent } from '@app/users/users.component';
   declarations: [
     AppComponent,
     AboutComponent,
-    TenantsComponent,
-    CreateTenantComponent,
-    EditTenantComponent,
     UsersComponent,
     CreateUserComponent,
     EditUserComponent,
@@ -57,6 +54,7 @@ import { UsersComponent } from '@app/users/users.component';
     ModalModule.forRoot(),
     AbpModule,
     AppRoutingModule,
+    NgxsModule.forFeature([AppUiState, MasterDataState]),
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,

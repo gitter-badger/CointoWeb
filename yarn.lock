@@ -4145,10 +4145,6 @@ ngrx-store-freeze@^0.2.1:
   dependencies:
     deep-freeze-strict "^1.1.1"
 
-ngrx-store-logger@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ngrx-store-logger/-/ngrx-store-logger-0.2.0.tgz#9bef9447bc91d8e35a2aa6ae1c5a57ea51036694"
-
 ngx-bootstrap@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/ngx-bootstrap/-/ngx-bootstrap-2.0.2.tgz#6862b2ee4764bb6cfd34c66528873d0d050c2faa"

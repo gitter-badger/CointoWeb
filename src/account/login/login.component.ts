@@ -1,6 +1,4 @@
-﻿import * as fromRoot from '../../store/index';
-
-import {
+﻿import {
   AfterViewInit,
   Component,
   ElementRef,
@@ -13,10 +11,8 @@ import { FormControl, Validators } from '@angular/forms';
 
 import { AbpSessionService } from '@abp/session/abp-session.service';
 import { AppComponentBase } from '@shared/app-component-base';
-import { Login } from '../actions/auth.action';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 
 @Component({
@@ -55,7 +51,7 @@ export class LoginComponent extends AppComponentBase implements AfterViewInit {
 
   constructor(
     injector: Injector,
-    private _store: Store<fromRoot.AppState>,
+    // private _store: Store<fromRoot.AppState>,
     private _router: Router,
     private _sessionService: AbpSessionService,
     public loginService: LoginService
@@ -77,7 +73,7 @@ export class LoginComponent extends AppComponentBase implements AfterViewInit {
 
   login(): void {
     this.submitting = true;
-    this._store.dispatch(new Login(this.loginService.authenticateModel));
+    // this._store.dispatch(new Login(this.loginService.authenticateModel));
     // this.loginService.authenticate(() => (this.submitting = false));
   }
 }

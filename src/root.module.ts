@@ -40,34 +40,26 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
-import {
-  RouterStateSerializer,
-  StoreRouterConnectingModule,
-  routerReducer
-} from '@ngrx/router-store';
-import { metaReducers, reducers } from './store';
 
 import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
 import { AccountModule } from './account/account.module';
 import { AppConsts } from '@shared/AppConsts';
 import { AppPreBootstrap } from './AppPreBootstrap';
 import { AppSessionService } from '@shared/session/app-session.service';
-import { AppUiStateEffects } from '@app/effects/appUiState.effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { CustomRouterStateSerializer } from '@shared/utils/utils';
-import { EffectsModule } from '@ngrx/effects';
 import { ErrorModule } from 'error/error.module';
 import { LandingPageModule } from './landing/landingPage.module';
 import { ModalModule } from 'ngx-bootstrap';
+import { NgxsLoggerPluginModule } from '@ngxs/store';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/store';
 import { RootComponent } from './root.component';
 import { RootRoutingModule } from './root-routing.module';
-import { RouterEffects } from 'store/router.effects';
+import { RouterState } from './store/router.state';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { SharedModule } from '@shared/shared.module';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreModule } from '@ngrx/store';
-import { reducer } from '@app/reducer/appUiState.reducer';
+import { environment } from './environments/environment';
 
 export function appInitializerFactory(injector: Injector) {
   return () => {
@@ -150,17 +142,22 @@ export function instrumentOptions() {
     CovalentMessageModule,
     LandingPageModule,
     ErrorModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
-    StoreRouterConnectingModule.forRoot({
-      /*
-        They stateKey defines the name of the state used by the router-store reducer.
-        This matches the key defined in the map of reducers
-      */
-      stateKey: 'router'
+    NgxsModule.forRoot([RouterState]),
+    AccountModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot({
+      disabled: environment.production
     }),
-    StoreDevtoolsModule.instrument(instrumentOptions),
-    EffectsModule.forRoot([AppUiStateEffects, RouterEffects]),
-    AccountModule.forRoot()
+    NgxsLoggerPluginModule.forRoot({
+      /**
+       * Logger to implement. Defaults to console.
+       */
+      logger: console,
+
+      /**
+       * Collapse the log by default or not. Defaults to true.
+       */
+      collapsed: true
+    })
   ],
   declarations: [RootComponent],
   providers: [
@@ -175,10 +172,6 @@ export function instrumentOptions() {
     {
       provide: LOCALE_ID,
       useFactory: getCurrentLanguage
-    },
-    {
-      provide: RouterStateSerializer,
-      useClass: CustomRouterStateSerializer
     }
   ],
   bootstrap: [RootComponent]

@@ -10,7 +10,9 @@ import { NgModule } from '@angular/core';
     ApiServiceProxies.UserServiceProxy,
     ApiServiceProxies.TokenAuthServiceProxy,
     ApiServiceProxies.AccountServiceProxy,
-    ApiServiceProxies.ConfigurationServiceProxy
+    ApiServiceProxies.ConfigurationServiceProxy,
+    ApiServiceProxies.CountriesServiceProxy,
+    ApiServiceProxies.LanguagesServiceProxy
   ]
 })
-export class ServiceProxyModule {}
+export class ServiceProxyModule { }

@@ -65,63 +65,6 @@ export class LoginService {
     );
   }
 
-  // authenticate(finallyCallback?: () => void): void {
-  //   finallyCallback = finallyCallback || (() => {});
-
-  //   this._tokenAuthService
-  //     .authenticate(this.authenticateModel)
-  //     .finally(finallyCallback)
-  //     .subscribe((result: AuthenticateResultModel) => {
-  //       this.processAuthenticateResult(result);
-  //     });
-  // }
-
-  // private processAuthenticateResult(
-  //   authenticateResult: AuthenticateResultModel
-  // ) {
-  //   this.authenticateResult = authenticateResult;
-
-  //   if (authenticateResult.accessToken) {
-  //     // Successfully logged in
-  //     this.login(
-  //       authenticateResult.accessToken,
-  //       authenticateResult.encryptedAccessToken,
-  //       authenticateResult.expireInSeconds,
-  //       this.rememberMe
-  //     );
-  //   } else {
-  //     this._logService.warn('Unexpected authenticateResult!');
-  //     this._router.navigate(['account/login']);
-  //   }
-  // }
-
-  // private login(
-  //   accessToken: string,
-  //   encryptedAccessToken: string,
-  //   expireInSeconds: number,
-  //   rememberMe?: boolean
-  // ): void {
-  //   const tokenExpireDate = rememberMe
-  //     ? new Date(new Date().getTime() + 1000 * expireInSeconds)
-  //     : undefined;
-
-  //   this._tokenService.setToken(accessToken, tokenExpireDate);
-
-  //   this._utilsService.setCookieValue(
-  //     AppConsts.authorization.encrptedAuthTokenName,
-  //     encryptedAccessToken,
-  //     tokenExpireDate,
-  //     abp.appPath
-  //   );
-
-  //   let initialUrl = UrlHelper.initialUrl;
-  //   if (initialUrl.indexOf('/login') > 0) {
-  //     initialUrl = AppConsts.appBaseUrl;
-  //   }
-
-  //   location.href = initialUrl;
-  // }
-
   clear(): void {
     this._utilsService.deleteCookie(
       AppConsts.authorization.encrptedAuthTokenName,

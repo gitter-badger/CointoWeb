@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { AppRouteGuard } from '@shared/auth/auth-route-guard';
 import { DashboardContainerComponent } from './dashboard/dashboardContainer/dashboardContainer.component';
 import { NgModule } from '@angular/core';
-import { UsersComponent } from './users/users.component';
 
 @NgModule({
   imports: [

@@ -14,8 +14,10 @@ import {
 import { AppComponentBase } from '@shared/app-component-base';
 import { Location } from '@angular/common';
 import { LoginService } from '../login/login.service';
+import { Observable } from 'rxjs/observable';
 import { Router } from '@angular/router';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
+import { fromEvent } from 'rxjs/observable/fromEvent';
 import { style } from '@angular/core';
 
 @Component({
@@ -41,7 +43,7 @@ export class RegisterComponent extends AppComponentBase
     super(injector);
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void { }
 
   back(): void {
     this._location.back();

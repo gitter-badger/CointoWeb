@@ -17,6 +17,8 @@ import { AppInlineProfileComponent } from './layout/app-profile.component';
 import { AppRightpanelComponent } from '@app/layout/app-rightpanel.component';
 import { AppTopbarComponent } from '@app/layout/app-topbar.component';
 import { AppUiState } from '@app/store/appUi.state';
+import { CountriesServiceProxy } from '@shared/service-proxies/service-proxies';
+import { LoadCountries } from './store/appMasterData.state';
 import { LoadLanguages } from '@app/store/appMasterData.state';
 import { Observable } from 'rxjs/Observable';
 import { Select } from '@ngxs/store';
@@ -48,9 +50,6 @@ export class AppComponent extends AppComponentBase
   inlineProfileMenuIsVisible$: Observable<boolean>;
 
   @ViewChild('layoutNav') layoutNav: TdLayoutNavListComponent;
-  // @ViewChild('inlineProfile') inlineProfile: AppInlineProfileComponent;
-  // @ViewChild('layoutContainer') layourContainerViewChild: ElementRef;
-  // @ViewChild('layoutMenuScroller') layoutMenuScrollerViewChild: ElementRef;
   ngAfterViewInit() {
 
   }
@@ -80,7 +79,9 @@ export class AppComponent extends AppComponentBase
     });
 
     this.store.dispatch(new LoadLanguages());
+    this.store.dispatch(new LoadCountries());
 
+    // this._countryService.getAll().subscribe(x => alert(JSON.stringify(x)));
     // this.rightPanelIsVisible$ = this.store.select(getUiRightPanelVisible);
     // this.inlineProfileMenuIsVisible$ = this.store.select(
     //   getUiProfileMenuVisible

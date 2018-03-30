@@ -51,9 +51,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorModule } from 'error/error.module';
 import { LandingPageModule } from './landing/landingPage.module';
 import { ModalModule } from 'ngx-bootstrap';
-import { NgxsLoggerPluginModule } from '@ngxs/store';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin'
 import { NgxsModule } from '@ngxs/store';
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin'
 import { RootComponent } from './root.component';
 import { RootRoutingModule } from './root-routing.module';
 import { RouterState } from './store/router.state';

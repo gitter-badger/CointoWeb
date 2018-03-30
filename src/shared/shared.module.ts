@@ -13,6 +13,7 @@
     CovalentSearchModule,
     CovalentStepsModule
 } from '@covalent/core';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { Http, HttpModule, JsonpModule } from '@angular/http';
 import {
     MatAutocompleteModule,
@@ -47,7 +48,6 @@ import { AppRouteGuard } from './auth/auth-route-guard';
 import { AppSessionService } from './session/app-session.service';
 import { AppUrlService } from './nav/app-url.service';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MaterialInput } from 'shared/directives/material-input.directive';

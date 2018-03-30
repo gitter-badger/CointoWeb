@@ -55,6 +55,10 @@ export class AppPreBootstrap {
   private static getUserConfiguration(
     callback: () => void
   ): JQueryPromise<any> {
+    abp.utils.setCookieValue(
+      'Abp.Localization.CultureName',
+      'de'
+    )
     return abp
       .ajax({
         url: AppConsts.remoteServiceBaseUrl + '/AbpUserConfiguration/GetAll',
@@ -69,7 +73,6 @@ export class AppPreBootstrap {
       })
       .done(result => {
         $.extend(true, abp, result);
-
         abp.clock.provider = this.getCurrentClockProvider(
           result.clock.provider
         );

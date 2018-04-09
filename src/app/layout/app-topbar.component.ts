@@ -1,12 +1,12 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-topbar',
+  // tslint:disable-next-line:component-selector
+  selector: '[app-topbar]',
   templateUrl: './app-topbar.component.html'
 })
 export class AppTopbarComponent {
-  @Output() toggleVisibleRightPanel = new EventEmitter();
   @Output() toggleVisibleMainMenu = new EventEmitter();
 
-  constructor() {}
+  constructor() { }
 }

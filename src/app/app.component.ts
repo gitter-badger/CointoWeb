@@ -9,16 +9,18 @@
   Renderer,
   ViewChild
 } from '@angular/core';
-import { TdLayoutNavListComponent, TdMediaService } from '@covalent/core';
+import { AppUiState, ToggleInlineProfile } from '@app/store/appUi.state';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { LoadCountries, MasterDataState } from './store/appMasterData.state';
+import { Ng4LoadingSpinnerComponent, Ng4LoadingSpinnerModule, Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { TdLayoutComponent, TdLayoutNavListComponent, TdMediaService, TdNavigationDrawerComponent } from '@covalent/core';
 
 import { AppComponentBase } from '@shared/app-component-base';
 import { AppConsts } from '@shared/AppConsts';
 import { AppInlineProfileComponent } from './layout/app-profile.component';
 import { AppRightpanelComponent } from '@app/layout/app-rightpanel.component';
 import { AppTopbarComponent } from '@app/layout/app-topbar.component';
-import { AppUiState } from '@app/store/appUi.state';
 import { CountriesServiceProxy } from '@shared/service-proxies/service-proxies';
-import { LoadCountries } from './store/appMasterData.state';
 import { LoadLanguages } from '@app/store/appMasterData.state';
 import { Observable } from 'rxjs/Observable';
 import { Select } from '@ngxs/store';
@@ -27,6 +29,7 @@ import { SignalRHelper } from '@shared/helpers/SignalRHelper';
 import { Store } from '@ngxs/store';
 import { Subscription } from 'rxjs/Subscription';
 import { ToggleMainMenu } from './store/appUi.state';
+import { zip } from 'rxjs/operators';
 
 declare var jQuery: any;
 
@@ -44,12 +47,13 @@ export class AppComponent extends AppComponentBase
   isDesktop: boolean;
   private _querySubscription: Subscription;
 
-  @Select(AppUiState.rightPanelVisible) staticMenuDesktopInactive$: Observable<boolean>;
-
+  @Select(AppUiState.mainMenuVisible) staticMenuDesktopInactive$: Observable<boolean>;
+  @Select(AppUiState.inlineProfileVisible) inlineProfileMenuIsVisible$: Observable<boolean>;
   rightPanelIsVisible$: Observable<boolean>;
-  inlineProfileMenuIsVisible$: Observable<boolean>;
 
-  @ViewChild('layoutNav') layoutNav: TdLayoutNavListComponent;
+  @ViewChild('layoutNav') layoutNav: TdLayoutComponent;
+  @ViewChild('drawer') drawer: TdNavigationDrawerComponent;
+
   ngAfterViewInit() {
 
   }
@@ -59,21 +63,23 @@ export class AppComponent extends AppComponentBase
     public renderer: Renderer,
     private store: Store,
     private media: TdMediaService,
-    private _ngZone: NgZone
+    private ngZone: NgZone,
+    private ng4LoadingSpinnerService: Ng4LoadingSpinnerService,
+    private sanitizer: DomSanitizer
   ) {
     super(injector);
   }
 
   ngOnInit(): void {
-    // if (this.appSession.application.features['SignalR']) {
-    //   if (this.appSession.application.features['SignalR.AspNetCore']) {
-    //     SignalRAspNetCoreHelper.initSignalR();
-    //   } else {
-    //     SignalRHelper.initSignalR();
-    //   }
-    // }
+    this.store.select(MasterDataState.isLoading).subscribe(b => {
+      if (b) {
+        this.ng4LoadingSpinnerService.show();
+      } else {
+        this.ng4LoadingSpinnerService.hide()
+      }
+    });
     this._querySubscription = this.media.registerQuery('gt-sm').subscribe((matches: boolean) => {
-      this._ngZone.run(() => {
+      this.ngZone.run(() => {
         this.isDesktop = matches;
       });
     });
@@ -81,13 +87,14 @@ export class AppComponent extends AppComponentBase
     this.store.dispatch(new LoadLanguages());
     this.store.dispatch(new LoadCountries());
 
-    // this._countryService.getAll().subscribe(x => alert(JSON.stringify(x)));
-    // this.rightPanelIsVisible$ = this.store.select(getUiRightPanelVisible);
-    // this.inlineProfileMenuIsVisible$ = this.store.select(
-    //   getUiProfileMenuVisible
-    // );
-    // this.staticMenuDesktopInactive$ = this.store
-    //   .select(getUiMainMenuVisible);
+    // SIGNALR
+    // if (this.appSession.application.features['SignalR']) {
+    //   if (this.appSession.application.features['SignalR.AspNetCore']) {
+    //     SignalRAspNetCoreHelper.initSignalR();
+    //   } else {
+    //     SignalRHelper.initSignalR();
+    //   }
+    // }
 
     // abp.event.on('abp.notifications.received', userNotification => {
     //   abp.notifications.showUiNotifyForUserNotification(userNotification);
@@ -112,9 +119,11 @@ export class AppComponent extends AppComponentBase
   }
 
   onToggleInlineProfileMenu(visible: boolean): void {
-    // this.store.dispatch(
-    //   new ToggleProfileMenuAction({ isVisible: !visible })
-    // );
+    // todo: muss über property doch irgendwie gehen
+    this.store.dispatch(
+      new ToggleInlineProfile(this.drawer.menuToggled)
+    );
+    this.drawer.toggleMenu();
   }
 
   onLogout(event: any): void {

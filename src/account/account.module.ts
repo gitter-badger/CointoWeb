@@ -1,5 +1,4 @@
-﻿import { HttpModule, JsonpModule } from '@angular/http';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+﻿import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { AbpModule } from '@abp/abp.module';
 import { AccountComponent } from './account.component';
@@ -8,6 +7,8 @@ import { AccountRoutingModule } from './account-routing.module';
 import { AuthGuard } from './services/auth-root.guard';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { JsonpModule } from '@angular/http';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -22,7 +23,7 @@ import { exhaustMap } from 'rxjs/operators';
   imports: [
     CommonModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     JsonpModule,
     AbpModule,
     SharedModule,

@@ -1,38 +1,29 @@
-﻿<td-layout>
-    <!-- <td-navigation-drawer flex sidenavTitle="Covalent" logo="assets:teradata" name="Firstname Lastname" email="firstname.lastname@company.com">
-        <mat-nav-list>
-            <a mat-list-item>
-                <mat-icon>home</mat-icon>Home</a>
-        </mat-nav-list>
-        <div td-navigation-drawer-menu>
-            <mat-nav-list>
-                <a mat-list-item>
-                    <mat-icon>account_box</mat-icon>Profile</a>
-            </mat-nav-list>
-        </div>
-    </td-navigation-drawer> -->
-    <td-layout-nav-list #layoutNav navigationRoute="/" [opened]="this.isDesktop ? (this.staticMenuDesktopInactive$ | async) : false"
-        [mode]="this.isDesktop ? 'side' : 'over'">
-        <!-- <button mat-icon-button td-menu-button tdLayoutToggle>
-            <mat-icon>menu</mat-icon>
-        </button> -->
-        <mat-nav-list td-sidenav-content>
-            <app-inline-profile [visible]="this.inlineProfileMenuIsVisible$ | async" (toggleProfileMenu)="this.onToggleInlineProfileMenu($event)"></app-inline-profile>
-            Sidenav content here
-        </mat-nav-list>
-        <div td-toolbar-content layout="row" layout-align="start center" flex>
-            <button matTooltip="Toggle menu" class="toggleMenuButton" mat-button tdLayoutNavListToggle (click)="this.onToggleMainMenu()">
-                <mat-icon>view_list</mat-icon>
-            </button>
-            <span flex></span>
-            <a mat-icon-button matTooltip="Docs" [routerLink]="" href="https://teradata.github.io/covalent/" target="_blank">
-                <mat-icon>chrome_reader_mode</mat-icon>
-            </a>
-        </div>
-        <router-outlet></router-outlet>
-        <td-layout-footer color="primary">
-            <app-footer></app-footer>
-        </td-layout-footer>
-    </td-layout-nav-list>
+﻿<ng4-loading-spinner> </ng4-loading-spinner>
+<div style="height:100%; width:100%" (swipeleft)="this.onToggleMainMenu()">
+    <td-layout #layoutNav [mode]="this.isDesktop ? 'side' : 'over'" [opened]="this.isDesktop ? (this.staticMenuDesktopInactive$ | async) : false">
+        <td-navigation-drawer #drawer flex [color]="'#fde7e7'">
 
-</td-layout>
+            <mat-nav-list>
+                <app-menu></app-menu>
+            </mat-nav-list>
+            <div td-navigation-drawer-toolbar>
+                <app-inline-profile (toggleProfileMenu)="this.onToggleInlineProfileMenu($event)" [opened]="this.inlineProfileMenuIsVisible$ | async"></app-inline-profile>
+            </div>
+            <ng-content select="[td-navigation-drawer-menu]"></ng-content>
+            <div td-navigation-drawer-menu>
+                <mat-nav-list>
+                    <a mat-list-item>
+                        <mat-icon>account_box</mat-icon>Profile</a>
+                </mat-nav-list>
+            </div>
+        </td-navigation-drawer>
+        <td-layout-nav navigationRoute="/">
+            <div app-topbar td-toolbar-content layout="row" layout-align="start center" flex (toggleVisibleMainMenu)="this.onToggleMainMenu();"></div>
+            <router-outlet></router-outlet>
+            <td-layout-footer color="primary">
+                <app-footer></app-footer>
+            </td-layout-footer>
+        </td-layout-nav>
+
+    </td-layout>
+</div>

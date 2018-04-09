@@ -2,7 +2,8 @@ import * as _ from 'lodash';
 
 import { Action, Selector, State } from '@ngxs/store';
 import { CountriesServiceProxy, LanguageDto } from '@shared/service-proxies/service-proxies';
-import { CountryDto, LanguagesServiceProxy, ListResultDtoOfCountryDto, ListResultDtoOfLanguageDto } from '../../shared/service-proxies/service-proxies';
+import { CountryDto, LanguagesServiceProxy } from '../../shared/service-proxies/service-proxies';
+import { ListResultDtoOfCountryDto, ListResultDtoOfLanguageDto } from '../../shared/service-proxies/service-proxies';
 
 import { LoadableState } from '@shared/store/loadableState.state';
 import { StateContext } from '@ngxs/store';
@@ -30,8 +31,9 @@ export class LoadCountriesFail {
 }
 
 
-export class MasterDataStateModel implements LoadableState {
-    loading: boolean;
+export class MasterDataStateModel {
+    loadingLanguages: boolean;
+    loadingCountries: boolean;
     languages: LanguageDto[];
     countries: CountryDto[];
 }
@@ -41,7 +43,8 @@ export class MasterDataStateModel implements LoadableState {
     defaults: {
         languages: undefined,
         countries: undefined,
-        loading: false
+        loadingLanguages: false,
+        loadingCountries: false
     }
 })
 export class MasterDataState {
@@ -53,11 +56,19 @@ export class MasterDataState {
         return result;
     }
 
+    @Selector()
+    static isLoading(state: MasterDataStateModel): boolean {
+        if (state.loadingCountries || state.loadingLanguages) {
+            return true;
+        }
+        return false;
+    }
+
     constructor(private _languageService: LanguagesServiceProxy, private _countryService: CountriesServiceProxy) { }
 
     @Action(LoadLanguages)
     loadLanguages({ getState, patchState, dispatch }: StateContext<MasterDataStateModel>) {
-        patchState({ loading: true });
+        patchState({ loadingLanguages: true });
         return this._languageService.getAll().pipe(
             tap((langResult: ListResultDtoOfLanguageDto) => {
                 setTimeout(() => {
@@ -68,7 +79,7 @@ export class MasterDataState {
 
     @Action(LoadCountries)
     loadCountries({ getState, patchState, dispatch }: StateContext<MasterDataStateModel>) {
-        patchState({ loading: true });
+        patchState({ loadingCountries: true });
         return this._countryService.getAll().pipe(
             tap((langResult: ListResultDtoOfCountryDto) => {
                 setTimeout(() => {
@@ -79,11 +90,11 @@ export class MasterDataState {
 
     @Action(LoadLanguagesSuccess)
     loadLanguagesSuccess({ getState, patchState }: StateContext<MasterDataStateModel>, { payload }: LoadLanguagesSuccess) {
-        patchState({ loading: false, languages: payload });
+        patchState({ loadingLanguages: false, languages: payload });
     }
 
     @Action(LoadCountriesSuccess)
     loadCountriessSuccess({ getState, patchState }: StateContext<MasterDataStateModel>, { payload }: LoadCountriesSuccess) {
-        patchState({ loading: false, countries: payload });
+        patchState({ loadingCountries: false, countries: payload });
     }
 }

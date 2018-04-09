@@ -1,1 +1,12 @@
-
+<button mat-icon-button td-menu-button tdLayoutToggle (click)="this.toggleVisibleMainMenu.emit();">
+    <mat-icon>menu</mat-icon>
+</button>
+<span flex></span>
+<!-- <td-search-box backIcon="search" placeholder="Search here" [showUnderline]="false" [debounce]="500" [alwaysVisible]="false">
+</td-search-box> -->
+<!-- <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>Item 1</button>
+    <button mat-menu-item>Item 2</button>
+</mat-menu> -->
+<app-topbar-languageswitch></app-topbar-languageswitch>

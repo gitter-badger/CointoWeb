@@ -1,4 +1,3 @@
-import { ABP_HTTP_PROVIDER, AbpModule } from '@abp/abp.module';
 import { APP_INITIALIZER, Injector, LOCALE_ID, NgModule } from '@angular/core';
 import {
   CovalentCommonModule,
@@ -15,6 +14,7 @@ import {
   CovalentSearchModule,
   CovalentStepsModule
 } from '@covalent/core';
+import { HttpClientModule, HttpResponse } from '@angular/common/http';
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -42,6 +42,8 @@ import {
 } from '@angular/material';
 
 import { API_BASE_URL } from '@shared/service-proxies/service-proxies';
+import { AbpHttpInterceptor } from '@abp/abpHttpInterceptor';
+import { AbpModule } from '@abp/abp.module';
 import { AccountModule } from './account/account.module';
 import { AppConsts } from '@shared/AppConsts';
 import { AppPreBootstrap } from './AppPreBootstrap';
@@ -49,6 +51,7 @@ import { AppSessionService } from '@shared/session/app-session.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorModule } from 'error/error.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LandingPageModule } from './landing/landingPage.module';
 import { ModalModule } from 'ngx-bootstrap';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin'
@@ -82,7 +85,7 @@ export function appInitializerFactory(injector: Injector) {
 }
 
 export function getRemoteServiceBaseUrl(): string {
-  return 'http://localhost:21021'; // AppConsts.remoteServiceBaseUrl;
+  return AppConsts.remoteServiceBaseUrl;
 }
 
 export function getCurrentLanguage(): string {
@@ -161,7 +164,7 @@ export function instrumentOptions() {
   ],
   declarations: [RootComponent],
   providers: [
-    ABP_HTTP_PROVIDER,
+    { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
     { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },
     {
       provide: APP_INITIALIZER,

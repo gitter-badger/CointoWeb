@@ -2,10 +2,12 @@
     box-sizing: border-box;
 }
 
-.profileImage {
-    text-align: center;
-    display: block;
-    margin: auto;
+// ng-deep um das parent element zu stylen, sollte mal verschoben werden aber zurzeit kommt das UI dann ziemlich durcheinander
+::ng-deep .td-nagivation-drawer-toolbar {
+    background: url('../../assets/profile/profilebackground3.png') no-repeat center;
+    background-size: auto 100%;
 }
 
-.profileImageWrapper {}
+.userEmail {
+    padding-left: 0;
+}

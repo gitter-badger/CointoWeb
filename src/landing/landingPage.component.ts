@@ -39,7 +39,7 @@ export class LandingPageComponent extends AppComponentBase implements OnInit {
       'assets',
       'cointo-logo',
       this._domSanitizer.bypassSecurityTrustResourceUrl(
-        '../assets/logo/svg/cointo.svg'
+        '../assets/logo/logo.svg'
       )
     );
   }

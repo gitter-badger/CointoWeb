@@ -28,7 +28,15 @@ import { TdExpansionPanelComponent } from '@covalent/core';
 })
 export class AppInlineProfileComponent {
   @Input() visible: boolean;
-  @Output() logout = new EventEmitter();
+  @Input() email: string;
+  @Input() name: string;
+  @Input() opened: boolean;
   @Output() toggleProfileMenu = new EventEmitter<boolean>();
-  @ViewChild('profilePanel') profilePanel: TdExpansionPanelComponent;
+  layout: string;
+
+  constructor() {
+    this.layout = 'circle';
+    this.email = 'sebfischer@gmx.net';
+    this.name = 'Max Mustermann';
+  }
 }

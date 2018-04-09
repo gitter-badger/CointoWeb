@@ -1,15 +1,13 @@
-<div class="profile">
-    <div class="profileImageWrapper">
-        <i class="far fa-user fa-2x profileImage"></i>
+<div>
+    <span layout="row" layout-align="start center">
+        <avatar [email]="this.email" [displayType]="this.layout" class="profileImageWrapper" [size]="'80'"></avatar>
+    </span>
+    <div class="mat-body-2">{{this.name}}</div>
+    <div class="mat-body-1" layout="row" href>
+        <button mat-button class="userEmail" aria-label="show profile menu" i18n-aria-label (click)="this.toggleProfileMenu.emit();">
+            {{this.email}}
+            <mat-icon *ngIf="!this.opened">arrow_drop_down</mat-icon>
+            <mat-icon *ngIf="this.opened">arrow_drop_up</mat-icon>
+        </button>
     </div>
 </div>
-<td-expansion-panel #profilePanel label="Another label goes here" [expand]="this.visible" (expanded)="this.toggleProfileMenu.emit(this.profilePanel.expand)"
-    (collapsed)="this.toggleProfileMenu.emit(this.profilePanel.expand)">
-    <div class="md-padding">
-        <h3 class="mat-subheading-2">md-padding class</h3>
-        <div>Demo 5</div>
-        <div>Demo 6</div>
-        <div>Demo 7</div>
-        <div>Demo 8</div>
-    </div>
-</td-expansion-panel>

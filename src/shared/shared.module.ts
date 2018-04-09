@@ -14,7 +14,6 @@
     CovalentStepsModule
 } from '@covalent/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { Http, HttpModule, JsonpModule } from '@angular/http';
 import {
     MatAutocompleteModule,
     MatButtonModule,
@@ -42,12 +41,14 @@ import {
 } from '@angular/material';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
+import { AbpHttpInterceptor } from '@abp/abpHttpInterceptor';
 import { AbpModule } from '@abp/abp.module';
 import { AppAuthService } from './auth/app-auth.service';
 import { AppRouteGuard } from './auth/auth-route-guard';
 import { AppSessionService } from './session/app-session.service';
 import { AppUrlService } from './nav/app-url.service';
 import { CommonModule } from '@angular/common';
+import { JsonpModule } from '@angular/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MaterialInput } from 'shared/directives/material-input.directive';
@@ -59,7 +60,6 @@ import { RouterModule } from '@angular/router';
         CommonModule,
         AbpModule,
         RouterModule,
-        HttpModule,
         JsonpModule,
         HttpClientModule,
         /** Material Modules */
@@ -109,7 +109,6 @@ import { RouterModule } from '@angular/router';
     ],
     exports: [
         MaterialInput,
-        HttpModule,
         JsonpModule,
         HttpClientModule,
         /** Material Modules */
@@ -153,6 +152,9 @@ import { RouterModule } from '@angular/router';
         CovalentDataTableModule,
         CovalentMessageModule,
         ReactiveFormsModule
+    ],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true }
     ]
 })
 export class SharedModule {
